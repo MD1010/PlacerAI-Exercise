@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AutoComplete } from "baseUI";
 import { range } from "lodash-es";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { formatDateByYear } from "utils";
 
 // todo figure out about absolute imports
@@ -9,16 +9,17 @@ import { formatDateByYear } from "utils";
 const METEOR_API_ENDPOINT = "https://data.nasa.gov/resource/y77d-th95.json";
 const YEARS = range(1900, 2023).map(String);
 
-const searchMeteorByYear = async (selectedYear: number) => {
-  const formattedYear = formatDateByYear(selectedYear);
-  const { data } = await axios.get(`${METEOR_API_ENDPOINT}?year=${formattedYear}`);
-  console.log(data);
-};
-
 export const MeteorSearch = () => {
+  const [selectedYear, setSelectedYear] = useState<string | undefined>();
+  const searchMeteorByYear = async (selectedYear: number) => {
+    const formattedYear = formatDateByYear(selectedYear);
+    const { data } = await axios.get(`${METEOR_API_ENDPOINT}?year=${formattedYear}`);
+    console.log(data);
+  };
+
   useEffect(() => {
-    searchMeteorByYear(1802);
-  });
+    selectedYear && searchMeteorByYear(+selectedYear);
+  }, [selectedYear]);
 
   // const results = await
   //   const getLocations = (
@@ -40,7 +41,7 @@ export const MeteorSearch = () => {
 
   return (
     <>
-      <AutoComplete suggestions={YEARS} />
+      <AutoComplete suggestions={YEARS} onSelection={setSelectedYear} />
     </>
   );
 };

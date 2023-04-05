@@ -15,9 +15,10 @@ type Props = {
   // ) => any;
   suggestions: any[];
   placeholder?: string;
+  onSelection: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
-export const AutoComplete: FC<Props> = ({ suggestions }) => {
+export const AutoComplete: FC<Props> = ({ suggestions, onSelection }) => {
   const [active, setActive] = useState(0);
   const [filtered, setFiltered] = useState([]);
   const [isShow, setIsShow] = useState(false);
@@ -38,12 +39,14 @@ export const AutoComplete: FC<Props> = ({ suggestions }) => {
     setFiltered([]);
     setIsShow(false);
     setInput(e.currentTarget.innerText);
+    onSelection(e.currentTarget.innerText);
   };
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       setActive(0);
       setIsShow(false);
       setInput(filtered[active]);
+      onSelection(e.currentTarget.value);
     } else if (e.key === "ArrowUp") {
       return active === 0 ? null : setActive(active - 1);
     } else if (e.key === "ArrowDown") {
