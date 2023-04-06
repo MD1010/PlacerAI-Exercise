@@ -1,17 +1,22 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import "./AutoComplete.scss";
 
 type Props = {
   suggestions: any[];
   placeholder?: string;
+  selectedOption: any;
   onSelection: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
-export const AutoComplete: FC<Props> = ({ suggestions, onSelection, placeholder }) => {
+export const AutoComplete: FC<Props> = ({ suggestions, onSelection, placeholder, selectedOption }) => {
   const [active, setActive] = useState(0);
   const [filtered, setFiltered] = useState([]);
   const [isShow, setIsShow] = useState(false);
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    setInput(selectedOption);
+  }, [selectedOption]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.currentTarget.value;
@@ -73,7 +78,7 @@ export const AutoComplete: FC<Props> = ({ suggestions, onSelection, placeholder 
         onFocus={() => setIsShow(true)}
         onChange={onChange}
         onKeyDown={onKeyDown}
-        value={input}
+        value={input ?? ""}
         placeholder={placeholder}
       />
       {renderAutocomplete()}

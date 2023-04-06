@@ -1,1 +1,1 @@
-export * from "./MeteorSearch";
+export * from "./MeteorSearch/MeteorSearch";

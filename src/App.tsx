@@ -1,5 +1,5 @@
 import { MeteorSearch } from "components";
-
+import "./scss/global.scss";
 function App() {
   return (
     <>
