@@ -1,5 +1,5 @@
 input {
-  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 255, 0.3);
   padding: 8px;
   width: 300px;
 }
@@ -7,22 +7,28 @@ input {
   color: #999;
   padding: 8px;
 }
+.autocompleteInput {
+  position: relative;
+}
 .autocomplete {
-  border: 1px solid #999;
+  position: absolute;
+  width: 300px;
+  left: 0;
+  border: 1px solid rgba(0, 0, 255, 0.3);
+  background-color: white;
   border-top-width: 0;
   list-style: none;
   margin-top: 0;
-  max-height: 500px;
+  max-height: 300px;
   overflow-y: auto;
   padding-left: 0;
-  width: calc(300px + 1rem);
 }
 .autocomplete li {
   padding: 8px;
 }
 .autocomplete > .active,
 .autocomplete li:hover {
-  background-color: darkgray;
+  background-color: rgba(0, 0, 255, 0.1);
   cursor: pointer;
   font-weight: 700;
 }

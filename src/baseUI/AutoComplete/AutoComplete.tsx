@@ -65,7 +65,7 @@ export const AutoComplete: FC<Props> = ({ suggestions, onSelection, placeholder,
     }
   };
   return (
-    <>
+    <div className="autocompleteInput">
       <input
         type="text"
         onFocus={() => setIsShow(true)}
@@ -75,6 +75,6 @@ export const AutoComplete: FC<Props> = ({ suggestions, onSelection, placeholder,
         placeholder={placeholder}
       />
       {renderAutocomplete()}
-    </>
+    </div>
   );
 };

@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .searchContainer {
+    display: flex;
+    gap: 3rem;
+
+    .massContainer,
+    .yearContainer {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .btnContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .searchBtn {
+      margin-top: 20px;
+      width: 40%;
+    }
+  }
+
+  .totalContainer {
+    .total {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+      align-self: center;
+    }
+  }
+}
