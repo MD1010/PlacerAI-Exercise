@@ -1,24 +1,13 @@
-import { AxiosError } from "axios";
-import { debounce } from "lodash-es";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import "./AutoComplete.scss";
-export type AutoCompleteOption = {
-  name: string;
-  active: boolean;
-  [key: string]: any;
-};
 
 type Props = {
-  // onSearch: (
-  //   searchTerm: string,
-  //   setSuggestions: React.Dispatch<React.SetStateAction<AutoCompleteOption[] | null>>
-  // ) => any;
   suggestions: any[];
   placeholder?: string;
   onSelection: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
-export const AutoComplete: FC<Props> = ({ suggestions, onSelection }) => {
+export const AutoComplete: FC<Props> = ({ suggestions, onSelection, placeholder }) => {
   const [active, setActive] = useState(0);
   const [filtered, setFiltered] = useState([]);
   const [isShow, setIsShow] = useState(false);
@@ -46,7 +35,7 @@ export const AutoComplete: FC<Props> = ({ suggestions, onSelection }) => {
       setActive(0);
       setIsShow(false);
       setInput(filtered[active]);
-      onSelection(e.currentTarget.value);
+      onSelection(filtered[active]);
     } else if (e.key === "ArrowUp") {
       return active === 0 ? null : setActive(active - 1);
     } else if (e.key === "ArrowDown") {
@@ -67,13 +56,14 @@ export const AutoComplete: FC<Props> = ({ suggestions, onSelection }) => {
             })}
           </ul>
         );
-      } else {
-        return (
-          <div className="no-autocomplete">
-            <span>Not found</span>
-          </div>
-        );
       }
+      // else {
+      //   return (
+      //     <div className="no-autocomplete">
+      //       <span>Not found</span>
+      //     </div>
+      //   );
+      // }
     }
   };
   return (
@@ -84,7 +74,7 @@ export const AutoComplete: FC<Props> = ({ suggestions, onSelection }) => {
         onChange={onChange}
         onKeyDown={onKeyDown}
         value={input}
-        placeholder="Select Year"
+        placeholder={placeholder}
       />
       {renderAutocomplete()}
     </>
