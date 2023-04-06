@@ -18,23 +18,18 @@ export const MeteorSearch = () => {
   return (
     <>
       <div className="container">
-        <div className="searchContainer">
-          <MeteorFilters
-            selectedYear={selectedYear}
-            meteorMass={meteorMass}
-            setSelectedYear={setSelectedYear}
-            setMeteorMass={setMeteorMass}
-          />
-        </div>
-        <div className="btnContainer">
-          <button className="searchBtn" onClick={searchByFilters}>
-            Search
-          </button>
-        </div>
+        <MeteorFilters
+          selectedYear={selectedYear}
+          meteorMass={meteorMass}
+          setSelectedYear={setSelectedYear}
+          setMeteorMass={setMeteorMass}
+        />
 
-        <div className="totalContainer">
-          {showResultBanner && <div className="total">Total Meteors: {resultCount}</div>}
-        </div>
+        <button className="searchBtn" onClick={searchByFilters}>
+          Search
+        </button>
+
+        {showResultBanner && <div className="total">Total Meteors: {resultCount}</div>}
       </div>
 
       <Loader isLoading={isLoading} style={{ marginTop: 20 }} />
