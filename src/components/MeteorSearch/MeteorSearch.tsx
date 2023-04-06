@@ -1,15 +1,11 @@
 import axios from "axios";
 import { AutoComplete } from "baseUI";
-import { isEmpty, range } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import { useState } from "react";
 import { Meteor } from "types";
 import { formatDateByYear, getYearFromString } from "utils";
 import "./MeteorSearch.scss";
-
-// todo figure out about absolute imports
-
-const METEOR_API_ENDPOINT = "https://data.nasa.gov/resource/y77d-th95.json";
-const YEARS = range(1800, 2024).map(String);
+import { METEOR_API_ENDPOINT, NO_METEORS_WITH_MASS_THRESHOLD, YEARS } from "./consts";
 
 export const MeteorSearch = () => {
   const [selectedYear, setSelectedYear] = useState<string | undefined>();
@@ -39,11 +35,11 @@ export const MeteorSearch = () => {
       setShowResultBanner(true);
       setResultCount(data.length);
       if (data.length === 0 && meteorMass) {
-        alert("The mass was not found, jumping to the first-year where there is a mass that fits the criteria");
+        alert(NO_METEORS_WITH_MASS_THRESHOLD);
         setFirstYearWithMassThreshold();
       }
     } catch (e) {
-      console.error("Something went wrong, could not fetch results");
+      console.error();
     }
   };
 
@@ -55,8 +51,8 @@ export const MeteorSearch = () => {
         },
       });
 
-      setShowResultBanner(false);
       const firstResultYear = getYearFromString((data[0] as Meteor).year);
+      setShowResultBanner(false);
       setSelectedYear(firstResultYear);
     } catch (e) {
       console.error("Something went wrong, could not fetch results");

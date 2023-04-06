@@ -62,13 +62,6 @@ export const AutoComplete: FC<Props> = ({ suggestions, onSelection, placeholder,
           </ul>
         );
       }
-      // else {
-      //   return (
-      //     <div className="no-autocomplete">
-      //       <span>Not found</span>
-      //     </div>
-      //   );
-      // }
     }
   };
   return (
