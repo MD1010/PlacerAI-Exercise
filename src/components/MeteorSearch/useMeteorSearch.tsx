@@ -51,13 +51,11 @@ export const useMeteorSearch = () => {
   }, [meteorMass]);
 
   useEffect(() => {
-    console.log("data", data);
-
     if (isEmpty(data) && meteorMass) {
       alert(NO_METEORS_WITH_MASS_THRESHOLD);
       setFirstYearWithMassThreshold();
     }
-  }, [data.length, showResultBanner]);
+  }, [data]);
 
   return {
     resultCount: data.length,
