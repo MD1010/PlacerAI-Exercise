@@ -11,9 +11,8 @@ type Props = {
 export const AutoComplete: React.FC<Props> = ({ suggestions, onSelection, placeholder, selectedOption }) => {
   const [active, setActive] = useState<number>(0);
   const [filtered, setFiltered] = useState<string[]>([]);
-  const [isShow, setIsShow] = useState<boolean>(false);
+  const [isShown, setIsShow] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
-
   const autoCompleteRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -93,7 +92,7 @@ export const AutoComplete: React.FC<Props> = ({ suggestions, onSelection, placeh
         onFocus={handleOnFocus}
         placeholder={placeholder}
       />
-      {isShow && (
+      {isShown && (
         <ul className="autocomplete">
           {filtered.map((suggestion, index) => (
             <li

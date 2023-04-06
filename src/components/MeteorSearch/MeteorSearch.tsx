@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AutoComplete, Loader } from "baseUI";
-import { isEmpty } from "lodash-es";
+import { filter, isEmpty } from "lodash-es";
 import { useMemo, useState } from "react";
 import { Meteor } from "types";
 import { formatDateByYear, getYearFromString } from "utils";
@@ -12,13 +12,15 @@ import {
   NO_YEAR_FOUND_MATCHING_RESULTS,
   YEARS,
 } from "./consts";
+import { MeteorFilters } from "./MeteorFilters";
 
 export const MeteorSearch = () => {
-  const [selectedYear, setSelectedYear] = useState<string | undefined>();
   const [resultCount, setResultCount] = useState<number | undefined>();
-  const [meteorMass, setMeteorMass] = useState<number | undefined>();
   const [showResultBanner, setShowResultBanner] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [selectedYear, setSelectedYear] = useState<string | undefined>();
+  const [meteorMass, setMeteorMass] = useState<number | undefined>();
 
   const meteorSearchQueryParams = useMemo(() => {
     const searchQueryParams: any = {};
@@ -32,8 +34,12 @@ export const MeteorSearch = () => {
     return searchQueryParams;
   }, [selectedYear, meteorMass]);
 
+  const handleNoMeteorsFound = () => {
+    alert(NO_METEORS_WITH_MASS_THRESHOLD);
+    setFirstYearWithMassThreshold();
+  };
+
   const searchMeteorsByFilters = async () => {
-    if (isEmpty(meteorSearchQueryParams)) return;
     setIsLoading(true);
     try {
       const { data } = await axios.get(METEOR_API_ENDPOINT, {
@@ -42,10 +48,7 @@ export const MeteorSearch = () => {
       setIsLoading(false);
       setShowResultBanner(true);
       setResultCount(data.length);
-      if (data.length === 0 && meteorMass) {
-        alert(NO_METEORS_WITH_MASS_THRESHOLD);
-        setFirstYearWithMassThreshold();
-      }
+      data.length === 0 && meteorMass && handleNoMeteorsFound();
     } catch (e) {
       console.error(FETCH_ERROR);
     }
@@ -72,24 +75,12 @@ export const MeteorSearch = () => {
     <>
       <div className="container">
         <div className="searchContainer">
-          <div className="yearContainer">
-            <span>Meteor Year</span>
-            <AutoComplete
-              selectedOption={selectedYear}
-              suggestions={YEARS}
-              onSelection={setSelectedYear}
-              placeholder="Select Year"
-            />
-          </div>
-          <div className="massContainer">
-            <span>Mass greater than</span>
-            <input
-              type="number"
-              min="0"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMeteorMass(+e.target.value)}
-              value={meteorMass ?? ""}
-            />
-          </div>
+          <MeteorFilters
+            selectedYear={selectedYear}
+            meteorMass={meteorMass}
+            setSelectedYear={setSelectedYear}
+            setMeteorMass={setMeteorMass}
+          />
         </div>
         <div className="btnContainer">
           <button className="searchBtn" onClick={searchMeteorsByFilters}>
