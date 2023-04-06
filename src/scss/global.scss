@@ -28,6 +28,10 @@ input {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
+  text-align: center;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 255, 0.3);
 
   &:focus {
     outline: none;
