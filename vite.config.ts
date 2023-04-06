@@ -9,6 +9,7 @@ export default defineConfig({
       baseUI: "/src/baseUI",
       components: "/src/components",
       utils: "/src/utils",
+      hooks: "/src/hooks",
     },
   },
 });
