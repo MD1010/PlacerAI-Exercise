@@ -1,26 +1,28 @@
 input {
-  border: 1px solid rgba(0, 0, 255, 0.3);
+  text-align: center;
   padding: 8px;
   width: 300px;
+  border: 1px solid rgba(0, 0, 255, 0.3);
 }
 .autocompleteInput {
   position: relative;
 }
 .autocomplete {
   position: absolute;
-  width: 300px;
   left: 0;
+  width: 300px;
+  max-height: 300px;
   border: 1px solid rgba(0, 0, 255, 0.3);
   background-color: white;
   border-top-width: 0;
   list-style: none;
   margin-top: 0;
-  max-height: 300px;
   overflow-y: auto;
   padding-left: 0;
 }
 .autocomplete li {
   padding: 10px;
+  text-align: center;
 }
 .autocomplete > .active,
 .autocomplete li:hover {
@@ -29,5 +31,17 @@ input {
   font-weight: 700;
 }
 .autocomplete li:not(:last-of-type) {
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid rgba(0, 0, 255, 0.1);
+}
+.autocomplete::-webkit-scrollbar {
+  width: 8px;
+}
+
+.autocomplete::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.autocomplete::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 255, 0.1);
+  border-radius: 4px;
 }
