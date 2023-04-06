@@ -21,6 +21,10 @@ export const AutoComplete: React.FC<Props> = ({ suggestions, onSelection, placeh
   }, [selectedOption]);
 
   useEffect(() => {
+    scrollToActive();
+  }, [active]);
+
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -35,19 +39,26 @@ export const AutoComplete: React.FC<Props> = ({ suggestions, onSelection, placeh
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "ArrowUp") {
-      event.preventDefault();
-      setActive((prevActive) => (prevActive - 1 >= 0 ? prevActive - 1 : filtered.length - 1));
-    } else if (event.key === "ArrowDown") {
-      event.preventDefault();
-      setActive((prevActive) => (prevActive + 1 < filtered.length ? prevActive + 1 : 0));
-    } else if (event.key === "Escape") {
+    if (event.key === "Enter") {
+      setActive(0);
       setIsShow(false);
-    } else if (event.key === "Enter") {
-      event.preventDefault();
       setInput(filtered[active]);
       onSelection(filtered[active]);
+    } else if (event.key === "ArrowUp") {
+      setActive(active === 0 ? filtered.length - 1 : active - 1);
+    } else if (event.key === "ArrowDown") {
+      setActive(active === filtered.length - 1 ? 0 : active + 1);
+    } else if (event.key === "Escape") {
       setIsShow(false);
+    }
+  };
+
+  const scrollToActive = () => {
+    const element = document.querySelector(".autocomplete li.active");
+    if (element) {
+      element.scrollIntoView({
+        block: "nearest",
+      });
     }
   };
 

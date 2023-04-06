@@ -3,10 +3,6 @@ input {
   padding: 8px;
   width: 300px;
 }
-.no-autocomplete {
-  color: #999;
-  padding: 8px;
-}
 .autocompleteInput {
   position: relative;
 }
@@ -24,7 +20,7 @@ input {
   padding-left: 0;
 }
 .autocomplete li {
-  padding: 8px;
+  padding: 10px;
 }
 .autocomplete > .active,
 .autocomplete li:hover {
